@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pranav Patel — Software Engineer</title>
+  <meta name="description" content="Pranav Patel is a software engineer with 3+ years building Python and TypeScript backends, API integrations, and LLM features for e-commerce teams.">
+  <meta property="og:title" content="Pranav Patel — Software Engineer">
+  <meta property="og:description" content="Software Engineer. Backend, AI/LLM, and integrations. Python and TypeScript services running in production.">
+  <meta property="og:type" content="website">
+  <!-- Site URL: change these 4 lines (plus robots.txt, sitemap.xml, 404.html) when the custom domain is live -->
+  <link rel="canonical" href="https://pranav245.github.io/portfolio/">
+  <meta property="og:url" content="https://pranav245.github.io/portfolio/">
+  <meta property="og:image" content="https://pranav245.github.io/portfolio/og-image.png">
+  <meta name="twitter:image" content="https://pranav245.github.io/portfolio/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Pranav Patel, Software Engineer. Backend, AI/LLM, Integrations.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#f7f6f3">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a href="#top" class="brand"><span class="mark"></span>Pranav Patel</a>
+  <nav>
+    <a href="#work">Work</a>
+    <a href="#builds">Builds</a>
+    <a href="#how">How I work</a>
+    <a href="#contact">Contact</a>
+    <a href="Pranav-Patel-Resume.pdf" class="btn-sm" target="_blank" rel="noopener">Resume</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <p class="status"><span class="live"></span>Open to Software Engineer roles: backend, AI/LLM, and integrations</p>
+        <h1>I make systems<br><em>work together</em>.</h1>
+        <p class="sub">I'm the engineer a team calls when two systems need to talk: a store and an ERP, new orders and a fraud check, a database and an email tool. I learn how the team works, build the backend, ship it, and keep it running. Lately I build with AI every day, using Claude Code and MCP.</p>
+      </div>
+
+      <div class="term" role="img" aria-label="Terminal intro: Pranav Patel, software engineer. Backend, AI/LLM and integrations. Python, TypeScript, FastAPI, Node, Postgres, REST, GraphQL, webhooks. 3+ years shipping to production.">
+        <div class="term-bar"><i></i><i></i><i></i><span>pranav — zsh — 80×24</span></div>
+        <pre class="term-body" id="term"></pre>
+      </div>
+    </div>
+
+    <div class="map-wrap">
+      <div class="map-head">
+        <span>System map · services I've built and what they connect</span>
+        <span class="legend"><i class="lg-mine"></i>Built by me <i class="lg-ext"></i>Connected system</span>
+      </div>
+      <svg id="map" class="diagram" role="img" aria-label="Diagram of the services I built and the systems they connect"></svg>
+      <div class="map-panel" id="panel" aria-live="polite">
+        <p class="p-kind">Explore</p>
+        <p class="p-title">Hover or tap a box.</p>
+        <p class="p-text">Solid boxes are services I built. Dashed boxes are the systems they talk to. The moving dots are data.</p>
+      </div>
+    </div>
+
+    <ul class="stats">
+      <li><b>100–150</b><span>risky orders caught each week</span></li>
+      <li><b>30 → 2 min</b><span>to create a sales order</span></li>
+      <li><b>2 weeks</b><span>first commit to production, wishlist app</span></li>
+    </ul>
+  </section>
+
+  <section id="work">
+    <div class="sec-head">
+      <h2>Selected work</h2>
+      <p>Client names, brands, and data are left out on purpose. Happy to walk through any design in a call.</p>
+    </div>
+
+    <article class="case" id="fraud">
+      <div class="case-meta">
+        <span class="idx">01 / Event-driven · Real-time</span>
+        <h3>Real-time fraud screening</h3>
+        <p class="metric"><b>100–150</b> risky orders caught per week, 6–8 hours of manual review saved</p>
+        <ul class="tags"><li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>Shopify webhooks</li><li>GraphQL</li><li>React</li></ul>
+      </div>
+      <div class="case-body">
+        <p class="label">Problem</p>
+        <p>Support checked risky orders by hand. Shopify's risk score sometimes arrives after the order is created, so some risky orders were never looked at.</p>
+        <p class="label">What I built</p>
+        <p>A service that receives every new order, waits 90 seconds so Shopify can finish its own checks, then reads the order again. It matches the customer against the team's fraud records and Shopify's risk level. Known fraud is cancelled. Risky orders go to a review queue and support gets an email. A second webhook catches late risk updates, and a nightly job re-scans the last 26 hours as a safety net.</p>
+        <p class="label">Result</p>
+        <p>100–150 risky orders flagged each week, saving support 6–8 hours of manual review. They now work from one dashboard with their own logins, notes, and approve / cancel buttons.</p>
+      </div>
+      <figure class="arch"><figcaption>Architecture</figcaption><svg class="diagram" data-arch="fraud" role="img" aria-label="Fraud screening architecture"></svg></figure>
+      <details>
+        <summary>Engineering notes</summary>
+        <ul>
+          <li>Anything that changes a real order (cancel, charge the card) sits behind one switch. It stayed off, with actions only logged, until the team trusted the results.</li>
+          <li>Before launch I found that orders were marked "cancelled" while the switch was off and no cancel was sent. Fixed it so the status and the email tell the truth.</li>
+          <li>The live webhook, the late-risk webhook, and the nightly re-scan share one pipeline, so all three behave the same. Running it twice is safe.</li>
+          <li>I checked the spec against real order data and found a case it missed: medium-risk orders were already charged, so only high-risk orders need an Approve button.</li>
+          <li>Every webhook is verified with an HMAC signature, so no one can send fake orders to the service.</li>
+        </ul>
+      </details>
+    </article>
+
+    <article class="case" id="wishlist">
+      <div class="case-meta">
+        <span class="idx">02 / Full-stack app · Marketing data</span>
+        <h3>Wishlist app with marketing sync</h3>
+        <p class="metric"><b>2 weeks</b> from first commit to production, with 150+ automated tests</p>
+        <ul class="tags"><li>TypeScript</li><li>Remix</li><li>Prisma</li><li>Liquid</li><li>App extensions</li><li>Klaviyo API</li></ul>
+      </div>
+      <div class="case-body">
+        <p class="label">Problem</p>
+        <p>The store paid for a third-party wishlist app, and the data was locked inside it. Marketing could not email shoppers about the items they saved.</p>
+        <p class="label">What I built</p>
+        <p>A custom Shopify app: heart buttons on product cards and pages, a "My Wishlists" page inside customer accounts, and an admin dashboard with the most-saved products and exports. Then a Klaviyo sync for "items on your wishlist" emails, and a conversion report that shows saved, then added to cart, then bought, by product or by variant.</p>
+        <p class="label">Result</p>
+        <p>Replaced the paid app. Marketing now sends "still on your wishlist" emails with each shopper's own items. It launched behind an on/off switch, so rollback takes one click.</p>
+      </div>
+      <figure class="arch"><figcaption>Architecture</figcaption><svg class="diagram" data-arch="wishlist" role="img" aria-label="Wishlist app architecture"></svg></figure>
+      <details>
+        <summary>Engineering notes</summary>
+        <ul>
+          <li>Klaviyo campaigns cannot read event data, only profile data. So the wishlist lives on the profile and in custom object records. I proved this by testing, because the docs don't say it clearly.</li>
+          <li>Klaviyo record IDs are global, not per customer. Each ID is a hash of customer + product, so one shopper's save can never overwrite another's.</li>
+          <li>The sync never blocks a shopper's save. It retries on rate limits but never waits more than 2 seconds on the shopper's request.</li>
+          <li>Found and fixed four bugs that only showed up in production (a server build issue, two CORS issues, and a per-store setup step), and wrote each one down for the team.</li>
+          <li>Privacy (GDPR / CCPA): a data erase endpoint the ERP calls to delete a customer across 6 tables in one database transaction, protected by Basic auth with a constant-time compare. Tracking sends IDs only, and only for wishlisted products.</li>
+        </ul>
+      </details>
+    </article>
+
+    <article class="case" id="oauth">
+      <div class="case-meta">
+        <span class="idx">03 / Platform · Security</span>
+        <h3>One auth service for every integration</h3>
+        <p class="metric"><b>5+ apps</b> share one auth service. Setup for a new app went from days to minutes.</p>
+        <ul class="tags"><li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>OAuth 2.0</li></ul>
+      </div>
+      <div class="case-body">
+        <p class="label">Problem</p>
+        <p>Every new script or app needed its own Shopify login setup for each store. Access tokens were spread across projects.</p>
+        <p class="label">What I built</p>
+        <p>A small service that runs the Shopify OAuth flow once per store, stores the tokens in Postgres, and hands them to internal apps through an API-key protected <code>GET /token/{store}</code> endpoint.</p>
+        <p class="label">Result</p>
+        <p>Fraud screening, product sync, the best-sellers service, and scheduled jobs all get their tokens from it. A new app skips auth setup and makes one API call instead.</p>
+      </div>
+      <figure class="arch"><figcaption>Architecture</figcaption><svg class="diagram" data-arch="oauth" role="img" aria-label="Auth service architecture"></svg></figure>
+    </article>
+
+    <article class="case" id="sync">
+      <div class="case-meta">
+        <span class="idx">04 / Data sync · Multi-region</span>
+        <h3>Catalog sync across four regions</h3>
+        <p class="metric"><b>4 stores</b> kept in sync, with a preview before every change</p>
+        <ul class="tags"><li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>React</li><li>Shopify GraphQL</li><li>Job queue</li></ul>
+      </div>
+      <div class="case-body">
+        <p class="label">Problem</p>
+        <p>Products are created in the main US store and had to be copied by hand into the Canada, EU, and Australia stores.</p>
+        <p class="label">What I built</p>
+        <p>A new app, built from scratch and embedded in the US store admin. The team picks products or a collection, picks the target stores, and sees a dry-run preview first. Then a job queue splits the work into one item per product per store, and a background worker syncs fields, images, and metafields. It can create, update, archive, or delete.</p>
+        <p class="label">Result</p>
+        <p>Built from scratch and launched in under two weeks. The team's feedback from the demo, like an Errors tab and simpler controls, went in the same day. One store failing never stops the others.</p>
+      </div>
+      <figure class="arch"><figcaption>Architecture</figcaption><svg class="diagram" data-arch="sync" role="img" aria-label="Product sync architecture"></svg></figure>
+      <details>
+        <summary>Engineering notes</summary>
+        <ul>
+          <li>The job queue lives in Postgres. Workers claim items with <code>FOR UPDATE SKIP LOCKED</code>, so two workers never take the same item, and no extra queue service is needed.</li>
+          <li>Rate limits, network errors, and Shopify 5xx errors are retried with backoff. When Shopify throttles, the client waits exactly as long as its query budget needs. An item left "running" by a crashed worker goes back to the queue.</li>
+          <li>The first sync matches products by SKU and checks the title. Zero or two matches is an error, never a guess. After that, saved ID links are used.</li>
+          <li>"In sync" is a hash of the US data, saved after each sync, so unchanged products are skipped.</li>
+          <li>Each US image is linked to its copy. An update uploads only new images and never re-uploads unchanged ones.</li>
+          <li>Safety first: only approved stores can be targets. A product's URL never changes after it is created, so live links don't break. If a sync would delete variants, it is blocked. Archive and delete always show a preview first.</li>
+          <li>45 automated tests.</li>
+        </ul>
+      </details>
+    </article>
+
+    <article class="case" id="subs">
+      <div class="case-meta">
+        <span class="idx">05 / Data pipeline · Reporting</span>
+        <h3>Subscription reporting into Asana</h3>
+        <p class="metric"><b>4 stores</b> rolled into one daily report, with no copying by hand</p>
+        <ul class="tags"><li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>Recharge API</li><li>Asana API</li></ul>
+      </div>
+      <div class="case-body">
+        <p class="label">Problem</p>
+        <p>Leadership tracks a subscription product in Asana, but Asana can't pull numbers from the subscription platform.</p>
+        <p class="label">What I built</p>
+        <p>A service that pulls orders and subscriptions for four stores into Postgres. It computes monthly revenue, new, active and cancelled subscriptions, and churn, then writes worldwide totals into Asana every day.</p>
+        <p class="label">Result</p>
+        <p>Leadership sees fresh numbers every day, and no one copies data by hand anymore.</p>
+      </div>
+      <figure class="arch"><figcaption>Architecture</figcaption><svg class="diagram" data-arch="subs" role="img" aria-label="Subscription reporting architecture"></svg></figure>
+      <details>
+        <summary>Engineering notes</summary>
+        <ul>
+          <li>Revenue comes from orders, not charges, to match the platform's own report, so the numbers agree.</li>
+          <li>Sync is cursor-paginated and idempotent. Running it twice gives the same result.</li>
+        </ul>
+      </details>
+    </article>
+
+    <article class="case" id="erp">
+      <div class="case-meta">
+        <span class="idx">06 / ERP · Sales tools</span>
+        <h3>Sales portal and ERP sync</h3>
+        <p class="metric"><b>30 → 2 min</b> to create a client order</p>
+        <ul class="tags"><li>Python</li><li>Flask</li><li>Odoo JSON-RPC</li><li>Shopify Admin API</li><li>GCP</li></ul>
+      </div>
+      <div class="case-body">
+        <p class="label">Problem</p>
+        <p>At BirdieBox, sales built client orders by hand, and product and stock data was typed twice, once in Odoo and once in Shopify.</p>
+        <p class="label">What I built</p>
+        <p>An internal portal where sales sets client-specific prices and creates draft orders in Shopify. A middleware on GCP that syncs products and inventory both ways between Odoo and Shopify. A script that creates 1,000+ discount codes per run.</p>
+        <p class="label">Result</p>
+        <p>Creating a client order went from 30+ minutes to under 2. 3,000+ SKUs stay in sync every hour, which removed 10+ hours of manual entry a week. The discount script replaced a paid tool.</p>
+      </div>
+      <figure class="arch"><figcaption>Architecture</figcaption><svg class="diagram" data-arch="erp" role="img" aria-label="Sales portal and ERP sync architecture"></svg></figure>
+    </article>
+  </section>
+
+  <section id="builds">
+    <div class="sec-head"><h2>Smaller builds</h2></div>
+    <ul class="tiles">
+      <li><span class="tag">Checkout logic</span><h3>Checkout shipping rule</h3><p>Runs inside checkout and hides international express shipping when the cart has 3+ dangerous-goods items.</p></li>
+      <li><span class="tag">Service</span><h3>Best sellers</h3><p>Ranks products by units sold over a rolling window and saves the list where the storefront can read it. No database needed.</p></li>
+      <li><span class="tag">Cache</span><h3>Live-status badges</h3><p>Polls a partner's rate-limited API every 5 minutes and serves a fast endpoint for storefront badges.</p></li>
+      <li><span class="tag">API</span><h3>Marketplace orders</h3><p>Receives marketplace orders in batches and saves them to Postgres for the ERP to read. Safe to resend.</p></li>
+      <li><span class="tag">Automation</span><h3>Onboarding pipeline</h3><p>Nightly job that turns new records into Asana tasks and Dropbox folders. Dry-run by default.</p></li>
+      <li><span class="tag">Automation</span><h3>Monthly rotation</h3><p>Turns a themed collection's products on and off on the 1st of each month, in each store's time zone.</p></li>
+      <li><span class="tag">Privacy</span><h3>Data erase flow</h3><p>One "Redact Contact" action in the ERP erases a customer from the wishlist app and a partner membership site. Built for GDPR / CCPA.</p></li>
+      <li><span class="tag">ML</span><h3>Launch forecast</h3><p>A small regression model that predicts first-week and first-year sales for new product launches.</p></li>
+    </ul>
+  </section>
+
+  <section id="how">
+    <div class="sec-head"><h2>How I work</h2></div>
+    <ol class="principles">
+      <li><h3>Start with the people</h3><p>Most tickets begin as a conversation, not a spec. I write every question and answer in a decision log the team can read.</p></li>
+      <li><h3>Test store first</h3><p>Every app is demoed on a test copy of the store before it touches real customers.</p></li>
+      <li><h3>Risky actions start switched off</h3><p>Cancelling orders, deleting records, writing to live systems: logged first, turned on once the team trusts it.</p></li>
+      <li><h3>Check the real source</h3><p>The database row, the API response, the logs. Not just the success message on screen.</p></li>
+      <li><h3>Plain words</h3><p>I explain technical problems to non-technical teams and hand off with short docs.</p></li>
+      <li><h3>AI in the loop</h3><p>I use Claude Code with MCP servers and custom AI skills every day to plan, build, test, and review. It let me ship a 2-repo GDPR data-erase feature with tests in one day.</p></li>
+    </ol>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head"><h2>Experience</h2></div>
+    <div class="exp-grid">
+      <ol class="timeline">
+        <li class="now">
+          <span class="when">2025 — now</span>
+          <h3>Software Engineer <span>· ECOM Consulting</span></h3>
+          <p>Embedded full-time with an e-commerce client as the only engineer on the account. I own their backend services end to end: fraud screening, a wishlist app, a shared auth service, and product sync across four stores.</p>
+        </li>
+        <li>
+          <span class="when">2024 — 2025</span>
+          <h3>Software Developer, Integrations <span>· BirdieBox</span></h3>
+          <p>Storefront work in Liquid, an internal sales portal, a two-way Odoo ↔ Shopify sync, and bulk discount tooling.</p>
+        </li>
+        <li>
+          <span class="when">2023 — 2024</span>
+          <h3>Software Developer <span>· Quality Matrix</span></h3>
+          <p>REST APIs and validation for a coupon redemption platform that cut duplicate redemptions by ~90%, plus a rewards dashboard for contractors.</p>
+        </li>
+        <li>
+          <span class="when">2022</span>
+          <h3>Software Engineer, summer <span>· Ubique Networks</span></h3>
+          <p>Flutter and Firebase ordering app for a startup pilot used by 200+ people, with Google Sign-In and real-time orders.</p>
+        </li>
+      </ol>
+
+      <aside class="side">
+        <div class="card">
+          <p class="card-h">Education</p>
+          <p class="edu"><b>M.S. Computer Science</b><span>University of Texas at Dallas · 2023</span></p>
+          <p class="edu"><b>B.Tech Computer Science</b><span>Lovely Professional University · 2021</span></p>
+        </div>
+        <div class="card">
+          <p class="card-h">Toolbox</p>
+          <dl class="skills">
+            <dt>AI/LLM</dt><dd>Claude API, OpenAI API, RAG, embeddings, pgvector, tool calling, MCP, Claude Code</dd>
+            <dt>Languages</dt><dd>Python, TypeScript, JavaScript, SQL</dd>
+            <dt>Backend</dt><dd>FastAPI, Flask, Node.js, Remix</dd>
+            <dt>Platforms</dt><dd>Shopify (Admin API, Liquid, Functions), Klaviyo, Odoo, Recharge, Asana</dd>
+            <dt>Integration</dt><dd>REST, GraphQL, webhooks, OAuth 2.0</dd>
+            <dt>Data</dt><dd>PostgreSQL, Redis, Prisma, SQLAlchemy, MongoDB</dd>
+            <dt>Cloud</dt><dd>DigitalOcean, GCP, Docker</dd>
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2 class="big">Hiring for backend, AI/LLM, or integrations?<br><span>Let's talk.</span></h2>
+    <a class="btn" href="mailto:pranavpatel.mail@gmail.com">pranavpatel.mail@gmail.com</a>
+    <p class="links"><a href="https://www.linkedin.com/in/pranav-patel24" target="_blank" rel="noopener">LinkedIn</a><a href="Pranav-Patel-Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a></p>
+  </section>
+
+</main>
+
+<footer class="foot">Dallas, TX · Built by hand, no template</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
